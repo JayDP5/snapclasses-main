@@ -184,7 +184,7 @@ def teacher_tab_take_attendance():
                             'is_present': bool(is_present)
                         })
 
-                attendance_result_dialog(pd.DataFrame(results), attendance_to_log)
+                    attendance_result_dialog(pd.DataFrame(results), attendance_to_log)
 
     with c3:
         if st.button('Use Voice Attendance', type='primary', width='stretch', icon=':material/mic:'):
@@ -350,7 +350,11 @@ def register_teacher(teacher_username, teacher_name, teacher_pass, teacher_pass_
         create_teacher(teacher_username, teacher_pass, teacher_name)
         return True, "Sucessfully Created! Login Now"
     except Exception as e:
-        return False, "Unexpected Error!"
+        import traceback
+        error_msg = str(e)
+        traceback.print_exc()
+        print(f"[REGISTRATION ERROR] {error_msg}")
+        return False, str(e)
     
 
 def teacher_screen_register():

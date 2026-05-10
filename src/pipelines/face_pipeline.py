@@ -9,7 +9,7 @@ import streamlit as st
 from src.database.db import get_all_students
 
 
-@st.cache_resource
+@st.cache_resource #loads once
 def load_dlib_models():
     detector = dlib.get_frontal_face_detector() 
 
@@ -26,13 +26,13 @@ def load_dlib_models():
 
 def get_face_embeddings(image_np):
     detector, sp, facerec = load_dlib_models()
-    faces = detector(image_np, 1)
+    faces = detector(image_np, 1) #1 means how much processing we want for the pic
 
     encodings= []
 
     for face in faces:
-        shape = sp(image_np, face)
-        face_descriptor = facerec.compute_face_descriptor(image_np, shape, 1) #128 embedding
+        shape = sp(image_np, face) #returns 68 landmarks
+        face_descriptor = facerec.compute_face_descriptor(image_np, shape, 1) #Turns to 128 embedding
 
         encodings.append(np.array(face_descriptor))
     return encodings

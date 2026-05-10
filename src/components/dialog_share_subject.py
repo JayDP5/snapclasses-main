@@ -1,7 +1,7 @@
 import streamlit as st
 
 import segno
-import io
+import io #to handle binary data
 
 
 @st.dialog("Share Class Link")
